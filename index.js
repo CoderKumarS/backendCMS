@@ -4,7 +4,7 @@ const http = require('http')
 const { Server } = require("socket.io")
 require('dotenv').config()
 const cors = require("cors")
-const { log } = require('console')
+const { log, time } = require('console')
 app.use(cors());
 
 const server = http.createServer(app);
@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
     console.log(`A user connected: ${id}`);
 
     socket.on('send_message', (data) => {
-        socket.broadcast.emit('reci_message', { message: data.message });
+        socket.broadcast.emit('reci_message', { message: data.message, time: data.time, id: id });
 
     })
     socket.on('disconnect', () => {
